@@ -74,7 +74,7 @@
   _overlay.lineDashPattern = @[@7.0, @7.0];
   _overlay.lineDashPhase   = 0;
 
-  [self.layer addSublayer:_overlay];
+//  [self.layer addSublayer:_overlay];
 }
 
 @end

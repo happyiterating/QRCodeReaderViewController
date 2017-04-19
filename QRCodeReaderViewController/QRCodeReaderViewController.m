@@ -102,7 +102,7 @@
 
     [_cameraView.layer insertSublayer:_codeReader.previewLayer atIndex:0];
 
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orientationChanged:) name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orientationChanged:) name:UIDeviceOrientationDidChangeNotification object:nil];
 
     __weak __typeof__(self) weakSelf = self;
 
@@ -216,7 +216,8 @@
   _cameraView.translatesAutoresizingMaskIntoConstraints = NO;
   _cameraView.clipsToBounds                             = YES;
   [self.view addSubview:_cameraView];
-
+//    _cameraView.hidden = YES;
+    
   [_codeReader.previewLayer setFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
 
   if ([_codeReader.previewLayer.connection isVideoOrientationSupported]) {
@@ -231,6 +232,7 @@
     [_switchCameraButton setTranslatesAutoresizingMaskIntoConstraints:false];
     [_switchCameraButton addTarget:self action:@selector(switchCameraAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_switchCameraButton];
+      _switchCameraButton.hidden = YES;
   }
 
   if (_showTorchButton && [_codeReader isTorchAvailable]) {
@@ -247,6 +249,7 @@
   [_cancelButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
   [_cancelButton addTarget:self action:@selector(cancelAction:) forControlEvents:UIControlEventTouchUpInside];
   [self.view addSubview:_cancelButton];
+    _cancelButton.hidden = YES;
 }
 
 - (void)setupAutoLayoutConstraints
@@ -254,7 +257,7 @@
   NSDictionary *views = NSDictionaryOfVariableBindings(_cameraView, _cancelButton);
 
   [self.view addConstraints:
-   [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_cameraView][_cancelButton(40)]|" options:0 metrics:nil views:views]];
+   [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_cameraView][_cancelButton(0)]|" options:0 metrics:nil views:views]];
   [self.view addConstraints:
    [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_cameraView]|" options:0 metrics:nil views:views]];
   [self.view addConstraints:
